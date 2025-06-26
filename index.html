@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Merhaba Nasılsın?</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: url('https://r.resimlink.com/gFWSv9mfyHG.png') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      text-shadow: 2px 2px 6px black;
+      transition: background 1s ease;
+    }
+
+    .screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100vw;
+      text-align: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .active {
+      display: flex;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: white;
+      margin-bottom: 40px;
+    }
+
+    .button-container {
+      position: relative;
+      width: 300px;
+      height: 200px;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 1.4rem;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      position: absolute;
+      transition: 0.2s;
+    }
+
+    .yes {
+      background-color: #28a745;
+      color: white;
+      left: 30px;
+      top: 80px;
+    }
+
+    .no {
+      background-color: #dc3545;
+      color: white;
+      left: 170px;
+      top: 80px;
+    }
+
+    #muteBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.8);
+      color: #333;
+    }
+
+    #gifImage {
+      width: 250px;
+      margin-top: 30px;
+    }
+
+    p {
+      font-size: 1.5rem;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- İlk Ekran -->
+  <div id="firstScreen" class="screen active">
+    <h1>Merhaba Nasılsın</h1>
+    <div class="button-container">
+      <button class="yes" id="yesBtn">İyiyim</button>
+      <button class="no" id="noBtn">Kötüyüm</button>
+    </div>
+  </div>
+
+  <!-- İkinci Ekran -->
+  <div id="secondScreen" class="screen">
+    <h1>BU BİR DENEMEDİR </h1>
+    <p>DİKKAT!!</p>
+    <img id="gifImage" src="https://r.resimlink.com/9ayZTQNE1PV.jpg" alt="Kalp gif" />
+  </div>
+
+  <!-- Müzik -->
+  <audio id="bgMusic" loop>
+    <source src="file:///C:/Users/aemre/Downloads/sebahat_abla_feat._sezen_aksu_mp3_76333.mp3" type="audio/mpeg">
+    Tarayıcınız bu sesi desteklemiyor.
+  </audio>
+
+  <!-- Sessiz / Sesli Butonu -->
+  <button id="muteBtn">🔇 Sessiz</button>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const firstScreen = document.getElementById('firstScreen');
+    const secondScreen = document.getElementById('secondScreen');
+    const music = document.getElementById('bgMusic');
+    const muteBtn = document.getElementById('muteBtn');
+
+    // Hayır butonu kaçar
+    noBtn.addEventListener('mouseenter', () => {
+      const maxX = 200;
+      const maxY = 100;
+      const newX = Math.floor(Math.random() * maxX);
+      const newY = Math.floor(Math.random() * maxY);
+      noBtn.style.left = `${newX}px`;
+      noBtn.style.top = `${newY}px`;
+    });
+
+    // Sessiz butonu
+    muteBtn.addEventListener('click', () => {
+      music.muted = !music.muted;
+      muteBtn.textContent = music.muted ? '🔊 Ses Açık' : '🔇 Sessiz';
+    });
+
+    // Evet tıklanınca ekran geçişi ve müzik
+    yesBtn.addEventListener('click', () => {
+      music.play().catch(() => console.log("Müzik başlamadı."));
+      firstScreen.classList.remove('active');
+      secondScreen.classList.add('active');
+      document.body.style.background = 'linear-gradient(to right, #d46599, #fadcc4)';
+      document.body.style.textShadow = 'none';
+    });
+  </script>
+
+</body>
+</html>
